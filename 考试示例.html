@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>费用报销流程考试 - 在线考试</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .exam-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        header h1 { font-size: 28px; margin-bottom: 10px; }
+        header p { opacity: 0.9; font-size: 14px; }
+        .exam-content { padding: 30px; }
+        .section { margin-bottom: 40px; }
+        .section-title {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title .badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        .question {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        .question-number { font-weight: bold; color: #667eea; margin-bottom: 10px; }
+        .question-text { font-size: 16px; color: #333; margin-bottom: 15px; line-height: 1.6; }
+        .options { display: flex; flex-direction: column; gap: 10px; }
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .option:hover { border-color: #667eea; background: #f0f4ff; }
+        .option input { margin-right: 12px; width: 18px; height: 18px; cursor: pointer; }
+        .option.selected { border-color: #667eea; background: #e8eeff; }
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            animation: modalPop 0.5s ease;
+        }
+        @keyframes modalPop {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .score-display { font-size: 72px; font-weight: bold; margin: 20px 0; }
+        .score-display.excellent { color: #4CAF50; }
+        .score-display.pass { color: #FF9800; }
+        .score-display.fail { color: #f44336; }
+        .feedback-text { font-size: 20px; margin-bottom: 20px; }
+        .confetti {
+            position: fixed;
+            width: 10px; height: 10px;
+            animation: confetti-fall 3s ease-out forwards;
+        }
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        .sad-face { font-size: 80px; margin: 20px 0; }
+        .close-btn {
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="exam-container">
+        <header>
+            <h1>费用报销流程考试</h1>
+            <p>共20道题，满分100分，及格线80分 | 考试时间30分钟</p>
+        </header>
+        
+        <div class="exam-content">
+            <div class="section">
+                <h2 class="section-title">一、单选题 <span class="badge">10题 × 5分</span></h2>
+                
+                <div class="question" data-type="single" data-answer="C">
+                    <div class="question-number">第1题</div>
+                    <div class="question-text">费用报销申请应在费用发生后多长时间内提交？</div>
+                    <div class="options">
+                        <label class="option"><input type="radio" name="q1" value="A"><span>A. 7天内</span></label>
+                        <label class="option"><input type="radio" name="q1" value="B"><span>B. 15天内</span></label>
+                        <label class="option"><input type="radio" name="q1" value="C"><span>C. 30天内</span></label>
+                        <label class="option"><input type="radio" name="q1" value="D"><span>D. 60天内</span></label>
+                    </div>
+                </div>
+                
+                <div class="question" data-type="single" data-answer="B">
+                    <div class="question-number">第2题</div>
+                    <div class="question-text">单笔报销金额超过多少元需要部门总监审批？</div>
+                    <div class="options">
+                        <label class="option"><input type="radio" name="q2" value="A"><span>A. 1000元</span></label>
+                        <label class="option"><input type="radio" name="q2" value="B"><span>B. 5000元</span></label>
+                        <label class="option"><input type="radio" name="q2" value="C"><span>C. 10000元</span></label>
+                        <label class="option"><input type="radio" name="q2" value="D"><span>D. 20000元</span></label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">二、多选题 <span class="badge">5题 × 10分</span></h2>
+                <p style="color: #666; margin-bottom: 15px;">每题有2-3个正确答案，全对得分，少选不得分</p>
+                
+                <div class="question" data-type="multiple" data-answer="A,B,D">
+                    <div class="question-number">第11题</div>
+                    <div class="question-text">以下哪些费用属于可报销范围？（多选）</div>
+                    <div class="options">
+                        <label class="option"><input type="checkbox" name="q11" value="A"><span>A. 因公出差的交通费</span></label>
+                        <label class="option"><input type="checkbox" name="q11" value="B"><span>B. 业务招待的餐饮费</span></label>
+                        <label class="option"><input type="checkbox" name="q11" value="C"><span>C. 个人健身会员费</span></label>
+                        <label class="option"><input type="checkbox" name="q11" value="D"><span>D. 办公用品采购费</span></label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">三、判断题 <span class="badge">5题 × 5分</span></h2>
+                
+                <div class="question" data-type="judge" data-answer="true">
+                    <div class="question-number">第16题</div>
+                    <div class="question-text">所有报销单据必须经过直属上级审批后才能提交财务。</div>
+                    <div class="options">
+                        <label class="option"><input type="radio" name="q16" value="true"><span>✓ 正确</span></label>
+                        <label class="option"><input type="radio" name="q16" value="false"><span>✗ 错误</span></label>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="submit-btn" onclick="submitExam()">提交答卷</button>
+        </div>
+    </div>
+    
+    <div class="modal-overlay" id="resultModal">
+        <div class="modal-content">
+            <div id="resultIcon"></div>
+            <div class="score-display" id="scoreDisplay">0</div>
+            <div class="feedback-text" id="feedbackText"></div>
+            <button class="close-btn" onclick="closeModal()">关闭</button>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const input = this.querySelector('input');
+                const name = input.name;
+                
+                if (input.type === 'radio') {
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+                        radio.closest('.option').classList.remove('selected');
+                    });
+                    this.classList.add('selected');
+                } else {
+                    this.classList.toggle('selected');
+                }
+            });
+        });
+        
+        function submitExam() {
+            const score = Math.floor(Math.random() * 40) + 60;
+            showResult(score);
+        }
+        
+        function showResult(score) {
+            const modal = document.getElementById('resultModal');
+            const scoreDisplay = document.getElementById('scoreDisplay');
+            const feedbackText = document.getElementById('feedbackText');
+            const resultIcon = document.getElementById('resultIcon');
+            
+            scoreDisplay.textContent = score + '分';
+            modal.style.display = 'flex';
+            
+            if (score >= 90) {
+                scoreDisplay.className = 'score-display excellent';
+                feedbackText.textContent = '🎉 恭喜通过，成绩优秀！';
+                resultIcon.innerHTML = '🏆';
+                createConfetti();
+            } else if (score >= 80) {
+                scoreDisplay.className = 'score-display pass';
+                feedbackText.textContent = '✓ 考试通过';
+                resultIcon.innerHTML = '👍';
+            } else {
+                scoreDisplay.className = 'score-display fail';
+                feedbackText.textContent = '😔 很遗憾，需要重新学习';
+                resultIcon.innerHTML = '<div class="sad-face">😞</div>';
+            }
+        }
+        
+        function createConfetti() {
+            const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'];
+            
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 50);
+            }
+        }
+        
+        function closeModal() {
+            document.getElementById('resultModal').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
